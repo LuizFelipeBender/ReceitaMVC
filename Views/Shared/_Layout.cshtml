@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SiteMVC</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rammetto+One&family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white border-top border-bottom box-shadow mb-3 fixed-top border-black-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <h1 style="color:#5533FF;">PyCoffe</h1>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                                Receitas
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
+                                <a class="dropdown-item" asp-controller="Receitas" asp-action="Index">Receitas</a>
+                                <a class="dropdown-item" asp-controller="Home" asp-action="Create">Criar Receita</a>
+                            </div>
+                        </li>
+                        <partial name="_AdminPartial" />
+                    </ul>
+                    <form method="get" class="form-inline my-2 my-lg-0" asp-controller="Receitas" asp-action="Pesquisar">
+                        <input class="form-control mr-sm-2 border-black-3" name="name" type="search" placeholder="Pesquisar" aria-label="Search" />
+                        <button class="btn btn-sm btn-outline-dark my-2 my-sm-0 border-black-3" type="submit">Pesquisar</button>
+                    </form>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container" id="mainContainer">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <footer class="border-top footer text-center bg-black">
+        <div class="container">
+            <div class="row h-100">
+                <div class="col-sm-4 my-auto border-right">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                        <h1 style=color:#5533FF;> PyCoffe</h1>
+                    </a>
+                    <div>
+                        <a asp-area="Identity" asp-page="/Account/Register">Inscreva-se agora para boas receitas!</a>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <h2 style=color:#5533FF; class="pt-3" style="font-weight: bold;">Redes</h2>
+                    <ul class="px-0" style="list-style-type:none;">
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Instagram</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-4">
+                    <h2 style=color:#5533FF; class="pt-3" style="font-weight: bold;">Informacoes</h2>
+                    <ul class="px-0" style="list-style-type:none;">
+                        <li><a href="#">About us</a></li>
+                        <li><a href="#">Contatos</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></li>
+                        <li><a href="#">Termos e Condições</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

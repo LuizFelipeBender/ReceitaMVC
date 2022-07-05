@@ -1,0 +1,106 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using SiteMVC.Data;
+@inject UserManager<ApplicationUser> UserManager;
+@inject SignInManager<ApplicationUser> SignInManager;
+@model SiteMVC.Models.ReceitaModel;
+@{
+    ViewData["Title"] = "Detalhes";
+    var fotoPath = "~/Images/UploadedImages/" + (Model.ReceitaInfoModel?.FotoPath ?? "defaultImg.jpg");
+}
+
+<div class="container">
+    <h1 class="h1 text-center mt-2">@Model.NomeReceita</h1>
+    <div class="mx-auto my-3" style="width: 600px;">
+        <img src=@fotoPath asp-append-version="true" class="img-fluid" />
+    </div>
+    <div>
+        @if (Model.ReceitaDescricao != null)
+        {
+            <p>@Html.Raw(Model.ReceitaDescricao.Replace(Environment.NewLine, "<br />"))</p>
+        }
+        else
+        {
+            <p>Sem descrição para esta receita.</p>
+        }
+    </div>
+    <form method="post" asp-controller="Receitas" asp-action="Favoritos" asp-route-receitaId="@Model.Id">
+        @if (!ViewBag.FavoritoSalvo && SignInManager.IsSignedIn(User))
+        {
+            <a class="mb-3 float-right" href="#" data-toggle="modal" data-target="#favoriteModal_@Model.Id">Adiocionar aos Favoritos</a>
+            <div class="modal fade" id="favoriteModal_@Model.Id" tabindex="-1" role="dialog" aria-labelledby="favoritoModalLabel_@Model.Id" aria-hidden="true">
+                <div class="modal-dialog" role="documento">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="favoritoModalLabel_@Model.Id">Adiocionar aos Favoritos</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Adiocionar aos receita favoritos?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                            <button type="submit" class="btn btn-primary">Sim</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else if (ViewBag.FavoritoSalvo)
+        {
+            <a asp-controller="Perfil" asp-action="Favoritos" asp-route-userName="@UserManager.GetUserName(User)" class="mb-3 float-right">Favorito salvo</a>
+        }
+    </form>
+    <p>
+        <strong>Autor: </strong>
+        @if (Model.Autor != null) 
+        {
+            <a asp-controller="Perfil"  asp-action="Detalhes" asp-route-userName="@Model.Autor.UserName">@Model.Autor.UserName</a>
+        }
+    </p>
+    <div class="border mb-3">
+        <div class="row">
+            <div class="col-sm-8">
+                <h3 class="pl-1">Ingredientes:</h3>
+                @foreach (var ingredients in Model.ReceitaIngredienteModels)
+                {
+                    <div>
+                        <ul>
+                            <li><p>@ingredients.QuantidadeIngrendiente @ingredients.IngredienteUnidade @ingredients.IngredientsModel.Ingrediente</p></li>
+                        </ul>
+                    </div>
+                }
+            </div>
+            <div class="border-left col-sm-4 pt-3">
+                <p><strong>Receita Categoria:</strong> @Model.TipoDeReceita</p>
+                <p><strong>Rende:</strong> @if (Model.ReceitaInfoModel != null) { @Model.ReceitaInfoModel.Rende; } porções</p>
+                <p><strong>Tempo Preparo do Ingredientes:</strong> @if (Model.ReceitaInfoModel != null) { @Model.ReceitaInfoModel.TempoPrep; }</p>
+                <p><strong>Tempo de realização da receita:</strong> @if (Model.ReceitaInfoModel != null) { @Model.ReceitaInfoModel.TempCozinhamento; }</p>
+                <p><strong>Serve:</strong> @if (Model.ReceitaInfoModel != null) { @Model.ReceitaInfoModel.ServePessoa; } Pessoa</p>
+            </div>
+        </div>
+    </div>
+    <div class="border">
+        <h3 class="pl-1">Instruções:</h3>
+        @{var counter = 1; }
+        @foreach (var intrucoes in Model.InstrucaoModels)
+        {
+            <div class="px-2">
+                <h4>Passo @counter:</h4>
+                <p>@intrucoes.Instrucao</p>
+            </div>
+            counter++;
+        }
+    </div>
+    @if (User.HasClaim("IsAdmin", "true"))
+    {
+        <div class="row justify-content-center mt-3">
+            <a asp-controller="Receitas" asp-action="Editar" asp-route-id="@Model.Id" class="btn btn-primary mr-1 details-btn-w">Editar</a>
+            <form method="post" asp-controller="Receitas" asp-action="Deletar">
+                <input name="Id" value="@Model.Id" hidden />
+                <button class="btn btn-danger ml-1 details-btn-w" type="submit">Deletar</button>
+            </form>
+        </div>
+    }
+</div>

@@ -1,0 +1,47 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using SiteMVC.Data;
+@inject UserManager<ApplicationUser> UserManager; 
+@model SiteMVC.DTO.PerfilDTO;
+@{
+    ViewData["Title"] = "Detalhes";
+    Layout = "~/Views/Perfil/_Layout.cshtml";
+}
+
+<section>
+    <h4 class="my-3">About Me</h4>
+    <div class="row">
+        <label asp-for="Email" class="col-sm-3"></label>
+        <Input class="col-sm-6" value="@Model.Email" disabled />
+    </div>
+    <div class="row mt-3">
+        <label asp-for="UserName" class="col-sm-3"></label>
+        <input class="col-sm-6" value="@Model.UserName" disabled />
+    </div>
+    <div class="row mt-3">
+        <label asp-for="Nome" class="col-sm-3"></label>
+        <input class="col-sm-6" value="@Model.Nome" disabled />
+    </div>
+    <div class="row mt-3">
+        <label asp-for="Sobrenome" class="col-sm-3"></label>
+        <input class="col-sm-6" value="@Model.Sobrenome" disabled />
+    </div>
+    <div class="row mt-3">
+        <label asp-for="Sobremim" class="col-sm-3"></label>
+        <textarea class="col-sm-6" disabled>@Model.Sobremim</textarea>
+    </div>
+  
+    <div class="row mt-3">
+        <label asp-for="FacebookLink" class="col-sm-3"></label>
+        <input class="col-sm-6" value="@Model.FacebookLink" disabled />
+    </div>
+    <div class="row mt-3">
+        <label asp-for="TwitterLink" class="col-sm-3"></label>
+        <input class="col-sm-6" value="@Model.TwitterLink" disabled />
+    </div>
+    <div class="row mt-3">
+        @if (UserManager.GetUserName(User) == Model.UserName)
+        {
+            <a asp-area="Identity" asp-page="/Account/Manage/Index" class="col-sm-12">Editar meu perfil</a>
+        }
+    </div>
+</section>

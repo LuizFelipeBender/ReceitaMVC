@@ -1,0 +1,77 @@
+﻿@model SiteMVC.DTO.AdminIngredienteDTO; 
+@{
+    ViewData["Title"] = "ListaIngredientes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Ingredientes</h1>
+
+<form method="post" asp-controller="Admin" asp-action="AddIngrediente" class="mb-1">
+    <a href="#" class="btn btn-dark btn-font-white" data-toggle="modal" data-target="#addIngredientModal">Add</a>
+    <div class="modal fade" id="addIngredientModal" tabindex="-1" role="dialog" aria-labelledby="addIngredientModal" aria-hidden="true">
+        <div class="modal-dialog" role="documento">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addIngredientModal">Add Ingrediente</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input asp-for="IngredienteModel.Ingrediente" class="form-control" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<table class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Ingrediente</th>
+            <th scope="col" style="width: 25%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.IngredienteModels.Any())
+        {
+            @foreach (var ingrediente in Model.IngredienteModels)
+            {
+                <tr>
+                    <td>@ingrediente.Id</td>
+                    <td>@ingrediente.Ingrediente</td>
+                    <td>
+                        <form method="post" asp-controller="Admin" asp-action="DeletarIngrediente" asp-route-id="@ingrediente.Id" class="inline-form-btn">
+                            <a href="#" class="btn btn-dark btn-font-white" data-toggle="modal" data-target="#deleteIngredientModal_@ingrediente.Id">Deletar</a>
+                            <div class="modal fade" id="deleteIngredientModal_@ingrediente.Id" tabindex="-1" role="dialog" aria-labelledby="deleteIngredientModal_@ingrediente.Id" aria-hidden="true">
+                                <div class="modal-dialog" role="documento">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteIngredientModal_@ingrediente.Id">Deletar Ingrediente</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Tem certeza de que deseja excluir os ingredientes? Essa ação não pode ser desfeita.
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                                            <button type="submit" class="btn btn-primary">Sim</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <partial name="EditarIngrediente" model="ingrediente" />
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

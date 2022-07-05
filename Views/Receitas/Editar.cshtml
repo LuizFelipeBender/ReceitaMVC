@@ -1,0 +1,207 @@
+﻿@model SiteMVC.DTO.ReceitasEditaDTO
+@{
+    ViewData["Title"] = "Editar";
+    var fotoPath = "~/Images/UploadedImages/" + (Model.ReceitaModel.ReceitaInfoModel?.FotoPath ?? "defaultImg.jpg");
+}
+
+<form enctype="multipart/form-data" method="Post" asp-controller="Receitas" asp-action="Editar">
+    <input asp-for="ReceitaModel.Id" hidden/>
+    <input asp-for="ReceitaModel.ReceitaInfoModel.FotoPath" hidden/>
+    <div class="form-group row">
+        <div class="col-sm-4">
+            <div class="row">
+                <label asp-for="Foto" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <div class="border mb-1 d-flex flex-column" style="height: 230px;">
+                        <img asp-append-version="true" id="img-preview" src=@fotoPath style="height: 230px;" />
+                    </div>
+                    <div class="custom-file">
+                        <input asp-for="Foto" class="form-control custom-file-input" />
+                        <label class="custom-file-label">Escolher arquivo
+...</label>
+                    </div>
+                </div>
+            </div>
+          <div class="row mt-2">
+                               <label asp-for="ReceitaModel.ReceitaInfoModel.Rende" ></label>
+                <input asp-for="ReceitaModel.ReceitaInfoModel.Rende" placeholder="10 de porções" />
+                </div>
+                <div class="row mt-2">
+                    <span asp-validation-for="ReceitaModel.ReceitaInfoModel.TempCozinhamento" class="text-danger"></span>
+                    <label asp-for="ReceitaModel.ReceitaInfoModel.TempCozinhamento"  ></label>
+                    <input asp-for="ReceitaModel.ReceitaInfoModel.TempCozinhamento" placeholder="2 minutos" />
+                </div>
+                <div class="row mt-2">
+                     <span asp-validation-for="ReceitaModel.ReceitaInfoModel.TempoPrep" class="text-danger"></span>                   
+                    <label asp-for="ReceitaModel.ReceitaInfoModel.TempoPrep" ></label>
+                    <input asp-for="ReceitaModel.ReceitaInfoModel.TempoPrep" placeholder="2 minutos" />
+                </div>
+                <div class="row mt-2">
+                     <span asp-validation-for="ReceitaModel.ReceitaInfoModel.ServePessoa" class="text-danger"></span>                   
+                    <label asp-for="ReceitaModel.ReceitaInfoModel.ServePessoa"></label>
+                    <input asp-for="ReceitaModel.ReceitaInfoModel.ServePessoa" placeholder="2 " />
+                </div>
+                    <div class="row mt-2">
+                    <label asp-for="ReceitaModel.TipoDeReceita"></label>
+                    <select asp-for="ReceitaModel.TipoDeReceita" asp-items='Html.GetEnumSelectList<Enums.TipoDeReceita>()
+                        .Where(x => x.Value != "0")' ></select>
+                </div>
+
+                <div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="form-group row">
+                <label asp-for="ReceitaModel.NomeReceita" class="col-sm-2 col-form-label"></label>
+                <input asp-for="ReceitaModel.NomeReceita" class="form-control col-sm-10" />
+                <span asp-validation-for="ReceitaModel.NomeReceita" class="text-danger"></span>
+            </div>
+            <div class="form-group row" style="height: 88%">
+                <label asp-for="ReceitaModel.ReceitaDescricao" class="col-sm-2 col-form-label"></label>
+                <textarea asp-for="ReceitaModel.ReceitaDescricao" class="form-control col-sm-10"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="border mb-3">
+        <h4 class="pl-2">Ingredientes</h4>  
+        <p>Após clicar em Add clique abaixo do campo desejado e informe os dados do mesmo</p>
+        <button id="addIngredientButton" type="button" class="btn btn-sm btn-outline-dark border-black-3 mt-1 ml-2">Add</button>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col" style="width: 10%;">Quantidade</th>
+                    <th scope="col" style="width: 10%;">Unidade</th>
+                    <th scope="col" style="width: 80%;">Ingrediente</th>
+                </tr>
+            </thead>
+            <tbody id="ingredientTBody">
+                @{ var i = 0; }
+                @foreach (var recipeIngredients in Model.ReceitaModel.ReceitaIngredienteModels)
+                {
+                    <tr>
+                        <td>
+                            <input asp-for="@recipeIngredients.IngredienteId" name="ReceitaModel.ReceitaIngredienteModels[@i].IngredienteId" hidden />
+                            <input asp-for="@recipeIngredients.QuantidadeIngrendiente" name="ReceitaModel.ReceitaIngredienteModels[@i].QuantidadeIngrendiente" />
+                        </td>
+                        <td>
+                            <input asp-for="@recipeIngredients.IngredienteUnidade" name="ReceitaModel.ReceitaIngredienteModels[@i].IngredienteUnidade" />
+                        </td>
+                        <td>
+                            <input asp-for="@recipeIngredients.IngredientsModel.Ingrediente" 
+                                   name="ReceitaModel.ReceitaIngredienteModels[@i].IngredientsModel.Ingrediente" />
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger">Deletar</button>
+                        </td>
+                    </tr>
+                    i++;
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="border">
+        <h4 class="pl-2">Instruções</h4>
+        <button id="addInstrucaoButton" type="button" class="btn btn-sm btn-outline-dark border-black-3 mt-1 ml-2">Add</button>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col" style="width: 10%;">Passos</th>
+                    <th scope="col" style="width: 90%;">Instrucao</th>
+                </tr>
+            </thead>
+            <tbody id="instrucaoTBody">
+                @{
+                    var j = 0;
+                    var step = 1;
+                }
+                @foreach (var intrucoes in Model.ReceitaModel.InstrucaoModels)
+                {
+                    <tr>
+                        <td style="text-align: center;">
+                            <input asp-for="@intrucoes.Id" name="ReceitaModel.InstrucaoModels[@j].Id" hidden /><strong>@step</strong>
+                        </td>
+                        <td>
+                            <input asp-for="@intrucoes.Instrucao" name="ReceitaModel.InstrucaoModels[@j].Instrucao" />
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger">Deletar</button>
+                        </td>
+                    </tr>
+                    j++;
+                    step++;
+                }
+            </tbody>
+        </table>
+    </div>
+    <button type="submit" class="btn btn-sm btn-outline-dark border-black-3 mt-1">Update</button>
+    <a asp-controller="Receitas" asp-action="Index" class="btn btn-sm btn-outline-dark border-black-3 mt-1">Voltar</a>
+</form>
+
+@section Scripts{
+    @{ // Client side validation.
+        <partial name="_ValidationScriptsPartial" /> 
+    }
+
+<script>
+        $(document).ready(function () {
+            var index = "@Model.ReceitaModel.ReceitaIngredienteModels.Count()";
+            var count = 0;
+            $("#addIngredientButton").click(function () {
+                $("#ingredientTBody")
+                    .append('<tr><td><input type="text" name="ReceitaModel.ReceitaIngredienteModels[' + index + '].QuantidadeIngrendiente" /></td>'
+                        + '<td><input type="text" name="ReceitaModel.ReceitaIngredienteModels[' + index + '].IngredienteUnidade" /></td>'
+                        + '<td><input type="text" name="ReceitaModel.ReceitaIngredienteModels[' + index + '].IngredientsModel.Ingrediente" /></td>'
+                        + '<td><button type="button" class="btn btn-danger">Delete</button></td></tr');
+                index++;
+            });
+            $("#ingredientTBody").on("click", ".btn", function () {
+                $(this).closest("tr").remove();
+                count = 0;
+                index--;
+                $("#ingredientTBody > tr").each(function () {
+                    $(this).find("input").each(function () {
+                        $(this).attr("name", $(this).attr("name").replace(/\[\d+\]/, "[" + count + "]"));
+                    });
+                    count++;
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            var index = "@Model.ReceitaModel.InstrucaoModels.Count()";
+            var step = "@Model.ReceitaModel.InstrucaoModels.Count()";
+            step++;
+            $("#addInstrucaoButton").click(function () {
+                $("#instrucaoTBody")
+                    .append('<tr><td style="text-align: center"><strong>' + step + '</strong></td>'
+                        + '<td><input type="text" name="ReceitaModel.InstrucaoModels[' + index + '].Instrucao" /></td>'
+                        + '<td><button type="button" class="btn btn-danger">Delete</button></td></tr');
+                index++;
+                step++;
+            });
+            $("#instrucaoTBody").on("click", ".btn", function () {
+                $(this).closest("tr").remove();
+                count = 0;
+                step = 1;
+                index--;
+                $("#instrucaoTBody > tr").each(function () {
+                    $(this).find("input").each(function () {
+                        $(this).attr("name", $(this).attr("name").replace(/\[\d+\]/, "[" + count + "]"));
+                    });
+                    $(this).find("td:first-child").each(function () {
+                        $(this).html("<strong>" + step + "</strong>");
+                    });
+                    count++;
+                    step++;
+                });
+            });
+        });
+        $(document).ready(function () {
+            $(".custom-file-input").on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).next(".custom-file-label").html(fileName);
+                $("#img-preview").attr('src', URL.createObjectURL(event.target.files[0]));
+            });
+        });
+</script>   
+}

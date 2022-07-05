@@ -1,0 +1,25 @@
+﻿@model SiteMVC.Models.IngredienteModel;  
+
+<form method="post" asp-controller="Admin" asp-action="EditarIngrediente" class="inline-form-btn">
+    <a href="#" class="btn btn-dark btn-font-white" data-toggle="modal" data-target="#editarIngredienteModal_@Model.Id">Editar</a>
+    <div class="modal fade" id="editarIngredienteModal_@Model.Id" tabindex="-1" role="dialog" aria-labelledby="editarIngredienteModal_@Model.Id" aria-hidden="true">
+        <div class="modal-dialog" role="documento">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarIngredienteModal_@Model.Id">Editar Ingrediente</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input asp-for="@Model.Id" hidden />
+                    <input asp-for="@Model.Ingrediente" class="form-control" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                    <button type="submit" class="btn btn-primary">Sim</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

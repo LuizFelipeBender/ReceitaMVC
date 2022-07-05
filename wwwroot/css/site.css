@@ -1,0 +1,322 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+  font-family: 'Rammetto One', cursive, sans-serif;
+}
+
+a.navbar-brand > h1 {
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    color: #ffd100;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  padding-top: 100px;
+  font-family: 'Roboto', sans-serif;
+}
+
+#mainContainer {
+    min-height: calc(100vh - 500px);
+}
+
+@media(max-width:768px) {
+    #mainContainer {
+        min-height: calc(100vh - 720px);
+    }
+}
+
+.footer {
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    /*line-height: 60px;*/ /* Vertically center the text there */
+    color: #ffd100;
+    height: 380px;
+}
+
+.footer a {
+    color: white !important;
+}
+
+@media(min-width:768px) {
+    .footer {
+        height: 320px;
+        line-height: 60px;
+    }
+}
+
+table td {
+    position: relative;
+}
+
+table td input {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    border: none;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.details-btn-w {
+    width: 75px !important;
+}
+
+.border-black-3 {
+    border-width: 3px !important;
+    border-color: black !important;
+}
+
+.tipoReceita-div
+{
+    padding: 10px 10px 0;
+    width: 200px;
+}
+
+.tipoReceita-bg-gold {
+    background-color: #ffd100;
+    display: inline-block;
+    width: 200px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    position: relative;
+    top: -20px;
+    font-family: 'Rammetto One', cursive, sans-serif;
+}
+
+.bg-black {
+    background-color: #202020;
+}
+
+.rt-card-body {
+    padding: .5rem;
+}
+
+.rt-card-body > h5 {
+    font-weight: bold;
+}
+
+.tipoReceita-card {
+    height: 200px;
+    width: auto;
+}
+
+.embed-responsive .card-img-top {
+    object-fit: cover;
+}
+
+@media(min-width:768px) {
+    .div-height {
+        height: 700px;
+    }
+
+    .main-random-card {
+        width: 40.5rem;
+    }
+
+    .main-random-card img {
+        width: 100%;
+        max-height: 425.17px;
+    }
+
+    .random-card {
+        width: 25rem;
+    }
+
+    .random-card img {
+        width: 100%;
+        max-height: 245px;
+    }
+    
+    .random-card.ml-5 {
+        margin-left: 4.5rem !important;
+    }
+}
+
+@media(max-width:768px) {
+    .div-height {
+        height: 1050px;
+    }
+
+    .main-random-card {
+        width: 100%;
+    }
+
+    .main-random-card img {
+        width: 100%;
+        max-height: 225px;
+    }
+
+    .random-card {
+        width: 100%;
+        margin: auto !important;
+    }
+
+    .random-card img {
+        width: 100%;
+        max-height: 225px;
+    }
+}
+
+/* Horizontal line with text in the middle
+-------------------------------------------------- */
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size: 50px;
+    font-family: 'Rammetto One', cursive, sans-serif;
+}
+
+.separator::before, .separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 5px solid #000;
+}
+
+.separator::before {
+    margin-right: .25em;
+}
+
+.separator::after {
+    margin-left: .25em;
+}
+
+/* Picture slider in home index
+-------------------------------------------------- */
+@media (max-width: 768px) {
+    .carousel-inner .carousel-item > div {
+        display: none;
+    }
+
+        .carousel-inner .carousel-item > div:first-child {
+            display: block;
+        }
+}
+
+.carousel-inner .carousel-item.active,
+.carousel-inner .carousel-item-next,
+.carousel-inner .carousel-item-prev {
+    display: flex;
+}
+
+/* display 3 */
+@media (min-width: 768px) {
+
+    .carousel-inner .carousel-item-right.active,
+    .carousel-inner .carousel-item-next {
+        transform: translateX(33.333%);
+    }
+
+    .carousel-inner .carousel-item-left.active,
+    .carousel-inner .carousel-item-prev {
+        transform: translateX(-33.333%);
+    }
+}
+
+.carousel-inner .carousel-item-right,
+.carousel-inner .carousel-item-left {
+    transform: translateX(0);
+}
+
+a {
+    color: black !important;
+    font-weight: bold;
+}
+
+.card-header > h5 {
+    font-weight: bold;
+}
+
+.inline-form-btn {
+    display: inline;
+}
+
+.btn-font-white {
+    color: white !important;
+}
+
+body {
+    background-image: url(../Images/Background.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
+.credit {
+    background: rgba(0, 0, 0, 0.75);
+    font-size: 1.3em;
+    color: whitesmoke;
+    padding: 1em;
+    border-radius: 0.5em;
+}
+
+.credit a {
+    color: turquoise;
+    transition: 1s;
+}
+
+.credit a:hover {
+    color: white;
+    text-shadow: 0 0 8px white;
+}
